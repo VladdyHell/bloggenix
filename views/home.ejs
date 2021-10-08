@@ -5,9 +5,10 @@
 <div class="jumbotron">
     <h1><%=post.title%></h1>
     <p><%=post.content.slice(0, 100) + " ... "%></p>
-    <a class="btn btn-info" href="posts/<%=_.lowerCase(post.title)%>">Read More</a>
+    <a class="btn btn-info" href="posts/<%=_.kebabCase(post.title)%>">Read More</a>
 </div>
 <% });} %>
+<script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script>
 <div class="form-group compose-btn">
     <a class="btn btn-primary btn-lg" href="compose">Add Post</a>
 </div>

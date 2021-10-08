@@ -52,11 +52,13 @@ app.get('/compose', (req, res) => {
     res.render('compose', { css: 'css' });
 });
 
+app.get('/posts', (req, res) => {res.redirect('/')});
+
 app.get('/posts/:postTitle', (req, res) => {
     const postTitleParam = _.lowerCase(req.params.postTitle);
     console.log(postTitleParam);
     if (!posts) {
-        res.send("404 Not Found");
+        res.send(`<h1>Request Error! Contact the Developer and Report Server Bugs</h1>`);
     }
     else {
         posts.forEach((post) => {
@@ -70,7 +72,7 @@ app.get('/posts/:postTitle', (req, res) => {
                 });
             }
             // else {
-            //     res.send("404 Not Found");
+            //     res.send(`<h1>Error! Status Code: ${res.statusCode}</h1>`);
             // }
         });
     }
