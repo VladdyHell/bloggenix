@@ -1,0 +1,12 @@
+<%- include('partials/header'); -%>
+<ol class="breadcrumb" style="margin-top: 15px;">
+    <li><a href="/">Posts</a></li>
+    <li><a href="./<%=_.lowerCase(title)%>"><%= title %></a></li>
+</ol>
+
+<div class="well well-lg">
+    <h1><%= title %></h1>
+    <p><%= content  %></p>
+</div>
+
+<%- include('partials/footer'); -%>
