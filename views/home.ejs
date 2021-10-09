@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
 <!-- <h1>Post 1</h1>
-<p><post></p> -->
+<p>{post}</p> -->
 <% if (posts) {posts.forEach((post) => { %>
 <div class="jumbotron">
     <h1><%=post.title%></h1>
@@ -9,7 +9,9 @@
 </div>
 <% });} %>
 <script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script>
-<div class="form-group compose-btn">
-    <a class="btn btn-primary btn-lg" href="compose">Add Post</a>
+<div class="form-group compose-btn-container">
+    <a class="btn btn-primary btn-lg compose-btn" href="compose">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
 </div>
 <%- include('partials/footer'); -%>
