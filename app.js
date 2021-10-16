@@ -63,7 +63,7 @@ app.get('/posts/:postTitle', (req, res) => {
                 res.render('post', {
                     title: post.title,
                     content: postContent,
-                    css: '/css',
+                    css: '../css'
                 });
             }
             // else {
