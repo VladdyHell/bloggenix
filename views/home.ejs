@@ -1,6 +1,9 @@
 <%- include('partials/header'); -%>
-<!-- <h1>Post 1</h1>
-<p>{post}</p> -->
+<div class="well well-lg">
+<h1>What the Bloggenix?</h1>
+<!-- <p>{post}</p> -->
+<p>Bloggenix is a microblogging and social networking website founded by Vladd Cantor in 2021. This service allows users to post multimedia and other content to a short-form blog. </p>
+</div>
 <% if (posts) {posts.forEach((post) => { %>
 <div class="jumbotron">
     <h1><%=post.title%></h1>
@@ -8,7 +11,8 @@
     <a class="btn btn-info" href="posts/<%=_.kebabCase(post.title)%>">Read More</a>
 </div>
 <% });} %>
-<script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script>
+<!-- <script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script> -->
+<script>document.getElementsByClassName('well')[0].style.marginTop = "30px"</script>
 <div class="form-group compose-btn-container">
     <a class="btn btn-primary btn-lg compose-btn" href="compose">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
