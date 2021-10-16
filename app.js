@@ -82,7 +82,7 @@ app.post('/compose', (req, res) => {
     if (!posts) { posts = [] }
     posts.push(post);
     console.log(posts);
-    res.redirect('/');
+    res.redirect('./');
 });
 
 app.listen(port, function () {
