@@ -2,13 +2,13 @@
 <div class="well well-lg">
 <h1>What the Bloggenix?</h1>
 <!-- <p>{post}</p> -->
-<p>Bloggenix is a microblogging and social networking website founded by Vladd Cantor in 2021. This service allows users to post multimedia and other content to a short-form blog. </p>
+<p>Bloggenix is a public microblogging and social networking website founded by Vladd Cantor in 2021. This service allows users to post multimedia and other content to a short-form blog. </p>
 </div>
 <% if (posts) {posts.forEach((post) => { %>
 <div class="jumbotron">
     <h1><%=post.title%></h1>
     <p><%=post.content.slice(0, 100) + " ... "%></p>
-    <a class="btn btn-info" href="posts/<%=_.kebabCase(post.title)%>">Read More</a>
+    <a class="btn btn-info" href="posts/<%=post.id%>">Read More</a>
 </div>
 <% });} %>
 <!-- <script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script> -->

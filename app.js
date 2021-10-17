@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
     // }
 
     Post.find({}, (err, foundPosts) => {
+        // foundPosts.forEach();
         const local = {
             posts: foundPosts,
             css: 'css'
@@ -56,48 +57,39 @@ app.get('/contact', (req, res) => {
 
 app.get('/compose', (req, res) => {
     res.render('compose', { css: 'css' });
-    Post.find({}, (err, posts) => {
-        console.log(posts);
-    });
+    // Post.find({}, (err, posts) => {
+    //     console.log(posts);
+    // });
 });
 
 app.get('/posts', (req, res) => { res.redirect('/') });
 
-app.get('/posts/:postTitle', (req, res) => {
-    const postTitleParam = _.lowerCase(req.params.postTitle);
-    console.log(postTitleParam);
-    if (!posts) {
-        res.send(`<h1>Request Error! Contact the Developer and Report Server Bugs</h1>`);
-    }
-    else {
-        posts.forEach((post) => {
-            const postTitle = _.lowerCase(post.title);
-            const postContent = post.content;
-            if (postTitle === postTitleParam) {
-                res.render('post', {
-                    title: post.title,
-                    content: postContent,
-                    css: '../css'
-                });
-            }
-            // else {
-            //     res.send(`<h1>Error! Status Code: ${res.statusCode}</h1>`);
-            // }
+app.get('/posts/:postID', (req, res) => {
+    const postID = req.params.postID;
+    Post.findOne({ _id: postID }, (err, foundPost) => {
+        const postTitle = foundPost.title;
+        const postContent = foundPost.content;
+        res.render('post', {
+            title: postTitle,
+            content: postContent,
+            css: '../css'
         });
-    }
+    });
+    console.log(postID);
 });
 
 app.post('/compose', (req, res) => {
     const post = {
         title: req.body.postTitle,
-        content: req.body.postContent
+        content: req.body.postContent,
+        postID: req.body.submitID
     }
     //console.log(post);
-    Post.exists({ title: _.lowerCase(post.title) }, (err, foundPost) => {
-        err ? console.log(err) : foundPost ? console.log("Exists!") : Post.create(post, err => {
+    Post.findOne({ title: /* _.lowerCase( */post.title/* ) */ }, (err, foundPost) => {
+        err ? console.log(err) : (foundPost ? res.send(`The Title ${foundPost.title} Already Exists!`) : Post.create(post, err => {
             err ? console.log(err) : console.log(`Successfully saved ${post.title} to the database`)
             res.redirect('./');
-        });
+        }));
     });
     // posts.push(post);
     // console.log(posts);
