@@ -5,15 +5,23 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
 const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
 
 const app = express();
-
-let posts = null;
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public/"));
 app.locals._ = _;
+
+mongoose.connect("mongodb+srv://admin-vladd:VladdyHell007@cluster0.9u8lm.mongodb.net/blogpostsDB");
+
+const postsSchema = {
+    title: String,
+    content: String
+}
+
+const Post = mongoose.model("Post", postsSchema);
 
 app.get('/', (req, res) => {
     // if (!posts) { var lowerCasedParam = null }
@@ -26,12 +34,15 @@ app.get('/', (req, res) => {
     //     var lowerCasedParam = lowerCaseTitle;
     //     console.log('LCT:' + lowerCaseTitle());
     // }
-    const local = {
-        posts: posts,
-        css: 'css'
-        // titleParam: lowerCasedParam
-    }
-    res.render('home', local);
+
+    Post.find({}, (err, foundPosts) => {
+        const local = {
+            posts: foundPosts,
+            css: 'css'
+            // titleParam: lowerCasedParam
+        }
+        err ? console.log(err) : console.log("Found Posts"); res.render('home', local);
+    });
 
 });
 
@@ -45,9 +56,12 @@ app.get('/contact', (req, res) => {
 
 app.get('/compose', (req, res) => {
     res.render('compose', { css: 'css' });
+    Post.find({}, (err, posts) => {
+        console.log(posts);
+    });
 });
 
-app.get('/posts', (req, res) => {res.redirect('/')});
+app.get('/posts', (req, res) => { res.redirect('/') });
 
 app.get('/posts/:postTitle', (req, res) => {
     const postTitleParam = _.lowerCase(req.params.postTitle);
@@ -79,10 +93,15 @@ app.post('/compose', (req, res) => {
         content: req.body.postContent
     }
     //console.log(post);
-    if (!posts) { posts = [] }
-    posts.push(post);
-    console.log(posts);
-    res.redirect('./');
+    Post.exists({ title: _.lowerCase(post.title) }, (err, foundPost) => {
+        err ? console.log(err) : foundPost ? console.log("Exists!") : Post.create(post, err => {
+            err ? console.log(err) : console.log(`Successfully saved ${post.title} to the database`)
+            res.redirect('./');
+        });
+    });
+    // posts.push(post);
+    // console.log(posts);
+    // res.redirect('./');
 });
 
 app.listen(port, function () {
