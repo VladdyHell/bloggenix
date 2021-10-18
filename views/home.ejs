@@ -7,7 +7,7 @@
 <% if (posts) {posts.forEach((post) => { %>
 <div class="jumbotron">
     <h1><%=post.title%></h1>
-    <p><%=post.content.slice(0, 100) + " ... "%></p>
+    <%=post.content.slice(0, 100) + " ... "%>
     <a class="btn btn-info" href="posts/<%=post.id%>">Read More</a>
 </div>
 <% });} %>

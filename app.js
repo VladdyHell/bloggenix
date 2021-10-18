@@ -69,6 +69,7 @@ app.get('/posts/:postID', (req, res) => {
     Post.findOne({ _id: postID }, (err, foundPost) => {
         const postTitle = foundPost.title;
         const postContent = foundPost.content;
+        // console.log(postContent);
         res.render('post', {
             title: postTitle,
             content: postContent,

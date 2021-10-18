@@ -6,8 +6,11 @@
 </ol>
 
 <div class="well well-lg">
-    <h1><%= title %></h1>
-    <p style="white-space: pre-line;"><%= content  %></p>
+    <div class="jumbotron">
+        <h1 style="text-transform: uppercase; text-align: center;"><%= title %></h1>
+    </div>
+    <hr>
+    <%-content%>
 </div>
 
 <%- include('partials/footer'); -%>
