@@ -4,10 +4,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
-const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const striptags = require('striptags');
-const api_auth = require(__dirname + '/MongooseAPI&Auth.js');
+const authDB = require(__dirname + '/AuthDB.js');
 
 const app = express();
 
@@ -17,7 +16,7 @@ app.use(express.static("public/"));
 app.locals._ = _;
 app.locals.striptags = striptags;
 
-mongoose.connect(api_auth.getAPI());
+mongoose.connect(authDB.getAPI());
 
 const postsSchema = {
     title: String,
@@ -120,6 +119,12 @@ app.post('/compose', (req, res) => {
     // console.log(posts);
     // res.redirect('./');
 });
+
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
 
 app.listen(port, function () {
     console.log(`Server started on port ${port}`);
