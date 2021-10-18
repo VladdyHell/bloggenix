@@ -1,21 +1,57 @@
 <%- include('partials/header'); -%>
-<div class="well well-lg">
-<h1>What the Bloggenix?</h1>
-<!-- <p>{post}</p> -->
-<p>Bloggenix is a public microblogging and social networking website founded by Vladd Cantor in 2021. This service allows users to post multimedia and other content to a short-form blog. </p>
-</div>
-<% if (posts) {posts.forEach((post) => { %>
-<div class="jumbotron">
-    <h1><%=post.title%></h1>
-    <%=post.content.slice(0, 100) + " ... "%>
-    <a class="btn btn-info" href="posts/<%=post.id%>">Read More</a>
-</div>
-<% });} %>
+<section class="intro">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>What the Bloggenix?</h1>
+            <!-- <p>{post}</p> -->
+            <p>Bloggenix is a public microblogging and social networking website developed by Vladd Cantor in 2021 for
+                education purposes. This
+                service
+                allows users to post multimedia and other content to a short-form blog. It's temporarily a public blog
+                site
+                and
+                soon be integrated with user authentication to be able to post with ownership and full control. It's an
+                open-source project available on GitHub</p>
+            <a class="btn btn-info btn-lg" href="javascript:void(0)">
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                View Source Code
+            </a>
+        </div>
+    </div>
+</section>
+<section class="posts">
+    <div class="container">
+        <div class="form-group compose-btn-container">
+            <a class="btn btn-info btn-lg compose-btn" href="compose">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Add New Blog
+            </a>
+        </div>
+        <% if (posts) {posts.forEach((post) => { %>
+        <%if(post.length%3===0){%>
+        <div class="row">
+            <%};%>
+            <div class="col-lg-4">
+                <div class="well"
+                    style="min-height: 302px; display: flex; flex-direction: column; place-content: space-between;">
+                    <div>
+                        <h1><%=post.title%></h1>
+                        <%let postContent = striptags(post.content.slice(0, 100));%>
+                        <%if(striptags(post.content).length>=100){postContent = postContent + ' ... ';}%>
+                        <%=postContent%>
+                    </div>
+                    <a class="btn btn-info" style=" margin-top: 20px" href="posts/<%=post.id%>">
+                        <span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span>
+                        Read More
+                    </a>
+                </div>
+            </div>
+            <%if(post.length%3===0){%>
+        </div>
+        <%};%>
+        <% });} %>
+    </div>
+</section>
 <!-- <script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script> -->
-<script>document.getElementsByClassName('well')[0].style.marginTop = "30px"</script>
-<div class="form-group compose-btn-container">
-    <a class="btn btn-primary btn-lg compose-btn" href="compose">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </a>
-</div>
+<script>document.getElementsByClassName('jumbotron')[0].style.marginTop = "30px"</script>
 <%- include('partials/footer'); -%>

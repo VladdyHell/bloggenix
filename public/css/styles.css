@@ -4,6 +4,15 @@
 body {
     overflow-x: hidden;
 }
+
+section.intro {
+    background: #31b0d5;
+}
+
+section.posts .container {
+    padding-top: 64px;
+}
+
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -51,7 +60,7 @@ textarea {
 
 .compose-btn-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-top: 15px;
 }
 
@@ -60,6 +69,19 @@ textarea {
     justify-content: center;
     align-self: center;
 }
+
+.cancel-submit-btn {
+    display: flex;
+    place-content: space-between;
+}
+
+/* .cancel-submit-btn a {
+    justify-self: flex-start;
+}
+
+.cancel-submit-btn button {
+    justify-self: flex-end;
+} */
 
 footer .container {
     display: flex;
@@ -83,6 +105,17 @@ footer .container {
 
 .breadcrumb {
     margin-top: 15px;
+}
+
+.post {
+    /* display: flex;
+    flex-direction: column;
+    align-self: center; */
+}
+
+.post img {
+    max-width: 100%;
+    height: auto;
 }
 
 /*

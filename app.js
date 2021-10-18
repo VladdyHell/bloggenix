@@ -6,6 +6,8 @@ const ejs = require("ejs");
 const _ = require('lodash');
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const striptags = require('striptags');
+const api_auth = require(__dirname + '/MongooseAPI&Auth.js');
 
 const app = express();
 
@@ -13,8 +15,9 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public/"));
 app.locals._ = _;
+app.locals.striptags = striptags;
 
-mongoose.connect("mongodb+srv://admin-vladd:VladdyHell007@cluster0.9u8lm.mongodb.net/blogpostsDB");
+mongoose.connect(api_auth.getAPI());
 
 const postsSchema = {
     title: String,
@@ -39,7 +42,10 @@ app.get('/', (req, res) => {
         // foundPosts.forEach();
         const local = {
             posts: foundPosts,
-            css: 'css'
+            css: 'css',
+            homeHref: './',
+            aboutHref: './about',
+            contactHref: './contact'
             // titleParam: lowerCasedParam
         }
         err ? console.log(err) : console.log("Found Posts"); res.render('home', local);
@@ -48,15 +54,30 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    res.render('about', { css: 'css' });
+    res.render('about', {
+        css: 'css',
+        homeHref: './',
+        aboutHref: './about',
+        contactHref: './contact'
+    });
 });
 
 app.get('/contact', (req, res) => {
-    res.render('contact', { css: 'css' });
+    res.render('contact', {
+        css: 'css',
+        homeHref: './',
+        aboutHref: './about',
+        contactHref: './contact'
+    });
 });
 
 app.get('/compose', (req, res) => {
-    res.render('compose', { css: 'css' });
+    res.render('compose', {
+        css: 'css',
+        homeHref: './',
+        aboutHref: './about',
+        contactHref: './contact'
+    });
     // Post.find({}, (err, posts) => {
     //     console.log(posts);
     // });
@@ -73,7 +94,11 @@ app.get('/posts/:postID', (req, res) => {
         res.render('post', {
             title: postTitle,
             content: postContent,
-            css: '../css'
+            postID: postID,
+            css: '../css',
+            homeHref: '../',
+            aboutHref: '../about',
+            contactHref: '../contact'
         });
     });
     console.log(postID);
@@ -88,8 +113,7 @@ app.post('/compose', (req, res) => {
     //console.log(post);
     Post.findOne({ title: /* _.lowerCase( */post.title/* ) */ }, (err, foundPost) => {
         err ? console.log(err) : (foundPost ? res.send(`The Title ${foundPost.title} Already Exists!`) : Post.create(post, err => {
-            err ? console.log(err) : console.log(`Successfully saved ${post.title} to the database`)
-            res.redirect('./');
+            err ? console.log(err) : console.log(`Successfully saved ${post.title} to the database`);res.redirect('./');
         }));
     });
     // posts.push(post);
